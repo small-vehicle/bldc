@@ -42,6 +42,10 @@
 #include "crc.h"
 #include "bms.h"
 
+
+#include "pal.h"
+#include "pal_lld.h"
+
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
@@ -1529,7 +1533,8 @@ int mc_interface_try_input(void) {
 void mc_interface_fault_stop(mc_fault_code fault, bool is_second_motor, bool is_isr) {
 	m_fault_stop_fault = fault;
 	m_fault_stop_is_second_motor = is_second_motor;
-
+	palSetPadMode(HW_ADC_EXT_GPIO, HW_ADC_EXT_PIN, PAL_MODE_OUTPUT_PUSHPULL);
+	palWritePad(HW_ADC_EXT_GPIO, HW_ADC_EXT_PIN, PAL_LOW);
 	if (is_isr) {
 		chSysLockFromISR();
 		chEvtSignalI(fault_stop_tp, (eventmask_t) 1);

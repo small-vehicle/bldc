@@ -365,7 +365,8 @@ int main(void) {
 	chThdSleepMilliseconds(500);
 	palSetPad(BOOT_OK_GPIO, BOOT_OK_PIN);
 #endif
-
+	palSetPadMode(HW_ADC_EXT_GPIO, HW_ADC_EXT_PIN, PAL_MODE_OUTPUT_PUSHPULL);
+	palWritePad(HW_ADC_EXT_GPIO, HW_ADC_EXT_PIN, PAL_HIGH);
 	for(;;) {
 		chThdSleepMilliseconds(10);
 	}
